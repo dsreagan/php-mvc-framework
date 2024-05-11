@@ -19,8 +19,13 @@ class Products
         // Import the view code
         // So this require statement is basically just appending that code to this file
         require "views/products_index.php";
+    }
 
-        // This controller class file now only contains php, no html. 
-        // Demonstrating a separation on concerns.
+    public function show()
+    {
+        require "views/products_show.php";
     }
 }
+
+// This controller class file now only contains php, no html. 
+// Demonstrating a separation on concerns.
