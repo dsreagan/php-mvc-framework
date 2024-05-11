@@ -1,15 +1,25 @@
-<!-- http://localhost/php-projects/mvc/index.php -->
-
 <?php
+
 // We need to:
-// 1. Get the correct variables from the query string
+// 1. Get the correct variables from the path
 // 2. Import the correct controller code
 // 3. Establish an instance of the controller class
 // 4. Call the correct method of the controller class to show the view
 
 // 1
-$action = $_GET['action'];
-$controller = $_GET['controller'];
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+require "src/router.php";
+$router = new Router;
+// Routing Table
+$router->add('/', ["controller" => "home", "action" => "index"]);
+$router->add('/products', ["controller" => "products", "action" => "index"]);
+$router->add('/products/show', ["controller" => "products", "action" => "show"]);
+
+$segments = explode('/', $path);
+// This is index 2 and 3 for me because 0 is empty and 1 is the folder (mvc) on my local server
+$controller = $segments[2];
+$action = $segments[3];
 // 2
 require "src/controllers/$controller.php";
 // 3
