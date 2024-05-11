@@ -19,8 +19,7 @@ $controller_object->$action();
 
 
 
-
-// Abover is the simpler version of the below code
+// Above is the simpler version of the below code
 /*
 // 2 & 3
 if ($controller === "products" ) {
