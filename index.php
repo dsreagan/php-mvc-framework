@@ -9,7 +9,11 @@
 // 1
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-require "src/router.php";
+// For resolving any missing class files (i.e. we didn't require them)
+spl_autoload_register(function (string $class_name) {
+    require "src/$class_name.php";
+});
+
 $router = new Router;
 // Routing Table
 // Getting controller and action from the path
