@@ -1,5 +1,4 @@
 <?php
-
 // We need to:
 // 1. Get the correct variables from the path
 // 2. Import the correct controller code
@@ -11,10 +10,12 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // For resolving any missing class files (i.e. we didn't require them)
 spl_autoload_register(function (string $class_name) {
-    require "src/$class_name.php";
+
+    require "src/" . str_replace("\\", "/", $class_name) . ".php";
+
 });
 
-$router = new Router;
+$router = new Framework\Router;
 // Routing Table
 // Getting controller and action from the path
 $router->add('/mvc/home', ["controller" => "home", "action" => "index"]);
@@ -28,10 +29,11 @@ if ($params === false) {
     exit("No route match found");
 }
 
-$controller = $params["controller"];
+$controller = "App\Controllers\\" . ucwords($params["controller"]);
 $action = $params["action"];
 // 2
-require "src/controllers/$controller.php";
+// Done in the autoloader
+// require "src/controllers/$controller.php";
 // 3
 $controller_object = new $controller;
 // 4

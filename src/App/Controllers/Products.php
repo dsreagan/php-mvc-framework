@@ -3,12 +3,16 @@
 // This involves requesting data from the model class and sending that data to the view class
 // So it can be displayed to the end user in the desired way
 // Think of the controller as the manager of the other components
+
+namespace App\Controllers;
+
+use App\Models\Product;
+
 class Products
 {
     public function index()
     {
-        // Import the model code
-        require "src/models/product.php";
+        // No need to import the model class here, as it is done in the autoloader
 
         // Establish an instance of the model class
         $model = new Product;

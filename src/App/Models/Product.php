@@ -1,7 +1,11 @@
 <?php
-
 // Deals with data from the source
 // And sends the desired data back to the controller
+
+namespace App\Models;
+
+use PDO;
+
 class Product
 {
     public function getData(): array 
