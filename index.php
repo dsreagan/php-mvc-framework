@@ -12,14 +12,20 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 require "src/router.php";
 $router = new Router;
 // Routing Table
-$router->add('/', ["controller" => "home", "action" => "index"]);
-$router->add('/products', ["controller" => "products", "action" => "index"]);
-$router->add('/products/show', ["controller" => "products", "action" => "show"]);
+// Getting controller and action from the path
+$router->add('/mvc/home', ["controller" => "home", "action" => "index"]);
+$router->add('/mvc/', ["controller" => "home", "action" => "index"]);
+$router->add('/mvc/products', ["controller" => "products", "action" => "index"]);
+$router->add('/mvc/products/show', ["controller" => "products", "action" => "show"]);
 
-$segments = explode('/', $path);
-// This is index 2 and 3 for me because 0 is empty and 1 is the folder (mvc) on my local server
-$controller = $segments[2];
-$action = $segments[3];
+$params = $router->match($path);
+
+if ($params === false) {
+    exit("No route match found");
+}
+
+$controller = $params["controller"];
+$action = $params["action"];
 // 2
 require "src/controllers/$controller.php";
 // 3
